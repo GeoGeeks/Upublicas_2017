@@ -1,0 +1,94 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1,user-scalable=no">
+    <title>¿Cómo estamos en la U pública?</title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+    <script src="https://js.arcgis.com/4.9/"></script>
+    <script
+            src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E="
+            crossorigin="anonymous"></script>
+
+
+
+  <script src="js/jquery.min.js"></script>
+  <script src="js/map.js"></script>
+
+    <link rel="stylesheet" href="https://js.arcgis.com/4.9/esri/css/main.css">
+    <!--<link rel="stylesheet" href="https://js.arcgis.com/4.9/dijit/themes/claro/claro.css"> -->
+       <!-- Load CSS CDN's -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <!--<link rel="stylesheet" href="https://unpkg.com/leaflet@0.7.7/dist/leaflet.css"/>-->
+
+    <!-- Own CSS -->
+    <link rel="stylesheet" href="css/style.css" type="text/css">
+    <!-- animatedModal.js-->
+</head>
+<body>
+
+
+
+
+
+
+    <div class="container">
+    <!--  <img id="banner" src="img/banners-02.png" alt="Banner Image" class="col-12"/> -->
+        <div class="row">
+
+
+          <div> </div>
+          <!-- Left map Panel -->
+          <div class="col-lg-6 h-100 p-3">
+
+
+              <div class="row h-100 pt-1">
+                  <div  id="viewDiv" class="col-12">
+                      <div  class="bg-light rounded shadow h-100"></div>
+                  </div>
+              </div>
+
+          </div>
+
+            <!-- Right  Panel -->
+            <div class="col-lg-6 h-100 p-3">
+
+                <!-- first subpanel -->
+                <div class="row h-50 p-1">
+                    <div  class="col-12">
+                        <div class="bg-light rounded shadow h-100">
+                          <canvas id="pie-chart" height="150px"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <!-- Second subpanel -->
+                <div class="row h-50 p-1">
+                    <div class="col-12">
+                        <div id= "title" class='bg-light rounded shadow h-100 esri-widget'>
+                            <!--<canvas height="300px"></canvas> -->
+                            Para el año 2017 <span id='num-inscritos'>0</span> personas  se inscribieron a un programa académico en la <span id='universidad'>x</span>,
+                             de los cuales solo  <span id='num-admitidos'>0</span> fueron admitidos,es decir, un <span id='porcentaje_admitidos'>0</span>% del total de aspirantes.
+                             Por otra parte, para ese mismo año la universidad llegó a <span id='num-matriculados'>0</span> estudiantes matriculados.
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Third subpanel -->
+              <!--  <div class="row h-33 p-1">
+                    <div class="col-12">
+                        <div  class="bg-light rounded shadow h-100 esri-widget">
+
+                        </div>
+                    </div>
+                </div>-->
+
+
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>

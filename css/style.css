@@ -1,0 +1,80 @@
+html, body{
+ margin: 0px;
+ padding: 0px;
+ height: 100%;
+ border: none;
+ max-width: 100%;
+}
+.responsive {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+}
+
+body {
+  background: url("../img/aplashh-03.png");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+
+canvas {
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+}
+
+
+
+.bold {font-weight: bold}
+
+.h-33 {
+  height: 33.33%;
+}
+
+#title{
+  padding: 15px;
+}
+#num-inscritos {
+      color: #ed5050;
+      font-size: 12pt;
+      font-weight: bolder;
+      line-height: 0.8;
+}
+
+#universidad {
+      color: #000000;
+      font-size: 12pt;
+      font-weight: bolder;
+}
+
+#porcentaje_admitidos, #num-admitidos, #num-matriculados {
+  color: #149dcf;
+  font-size: 12pt;
+  font-weight: bolder;
+}
+
+#banner {
+position: relative;
+top: 0;
+left: 0;
+right: 0;
+width: 100%;
+max-width: 100% !important;
+max-height: 300px;
+z-index: -1;
+}
+
+#banner2 {
+  position: relative;
+  top: 0;
+  left: 0;
+  right: 0;
+ max-width: 100%;
+  max-height: 100px;
+  z-index: -1;
+}
+.container {
+    max-width: 90% !important;
+}
