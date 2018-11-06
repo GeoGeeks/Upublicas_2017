@@ -226,6 +226,7 @@ require([
       totalAdmitidos = document.getElementById("num-admitidos");
       porcentajeAdmitidos = document.getElementById("porcentaje_admitidos");
       totalMatriculados = document.getElementById("num-matriculados");
+      porcentajeAdmitidos = document.getElementById("porcentaje_admitidos");
 
       const canvasChart = document.getElementById("pie-chart");
       doughnutChart = new Chart(canvasChart.getContext("2d"), {
@@ -268,23 +269,28 @@ require([
     var admi = responses.getAttribute("Admitidos");
     var matri = responses.getAttribute("Matriculados");
     var uni = responses.getAttribute("Name");
-    console.log(Number(insc));
     var EstudiantesStats = [
           insc,
           admi,
           matri
     ];
     console.log(EstudiantesStats);
+    var porcen = (admi/insc * 100);
+    porcen = porcen.toFixed(3);
+    console.log(porcen);
     if (insc === undefined){
       totalInscritos.innerHTML = '0';
       totalAdmitidos.innerHTML = '0';
       totalMatriculados.innerHTML = '0';
       universidad.innerHTML ='x';
+      porcentajeAdmitidos.innerHTML = '0';
     }else{
       totalInscritos.innerHTML = insc;
       totalAdmitidos.innerHTML = admi;
       totalMatriculados.innerHTML = matri;
       universidad.innerHTML =uni;
+      porcentajeAdmitidos.innerHTML = porcen;
+
     }
     updateChart(doughnutChart, EstudiantesStats, uni);
     // // Update the total numbers in the title UI element
@@ -300,7 +306,8 @@ require([
     function updateChart(chart, dataValues, title) {
       console.log("data",dataValues);
       chart.data.datasets[0].data = dataValues;
-      console.log(chart.options.title);
+      console.log("universidad:",title);
+      chart.options.title.text = "Estadísticas de estudiantes de la "+" "+title+" "+"año 2017";
       //chart.options.title.text = title;
       //console.log("chart", chart);
       chart.update();
@@ -308,4 +315,7 @@ require([
 
 //  ====================================================================================================================
 
+
+
+//  ====================================================================================================================
 });

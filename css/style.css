@@ -32,26 +32,31 @@ canvas {
 .h-33 {
   height: 33.33%;
 }
+#tituloUni{
+  text-align: center;
+  color: #ffffff;
+}
 
 #title{
-  padding: 15px;
+  padding: 30px!important;
+  font-size: 18pt;
 }
 #num-inscritos {
       color: #ed5050;
-      font-size: 12pt;
+      font-size: 15pt;
       font-weight: bolder;
       line-height: 0.8;
 }
 
 #universidad {
       color: #000000;
-      font-size: 12pt;
+      font-size: 15pt;
       font-weight: bolder;
 }
 
 #porcentaje_admitidos, #num-admitidos, #num-matriculados {
   color: #149dcf;
-  font-size: 12pt;
+  font-size: 15pt;
   font-weight: bolder;
 }
 
