@@ -2,7 +2,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1,user-scalable=no">
-    <title>¿Cómo estamos en la U pública?</title>
+    <title>Datos de la U pública en Colombia - 2017</title>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
     <script src="https://js.arcgis.com/4.9/"></script>
@@ -34,17 +34,16 @@
 
 
     <div class="container">
-      <h1 id="tituloUni" > ¿Cómo estamos en la U Pública?</h1>
+      <h1 > Datos de la <span  id="tituloUni"> U pública en Colombia - 2017</span></h1>
     <!--  <img id="banner" src="img/banners-02.png" alt="Banner Image" class="col-12"/> -->
         <div class="row">
 
 
-          <div> </div>
           <!-- Left map Panel -->
-          <div class="col-lg-6 h-100 p-3">
+          <div class="col-lg-6 h-95 p-3">
 
 
-              <div class="row h-100 pt-1">
+              <div class="row h-95 pt-1">
                   <div  id="viewDiv" class="col-12">
                       <div  class="bg-light rounded shadow h-100"></div>
                   </div>
@@ -53,37 +52,40 @@
           </div>
 
             <!-- Right  Panel -->
-            <div class="col-lg-6 h-100 p-3">
+            <div class="col-lg-6 h-95 p-3">
 
                 <!-- first subpanel -->
-                <div class="row h-50 p-1">
+                <div class="row h-33 p-1">
                     <div  class="col-12">
-                        <div class="bg-light rounded shadow h-100">
-                          <canvas id="pie-chart" height="150px"></canvas>
+                        <div class="bg-light rounded shadow h-95 esri-widget">
+                          <canvas class="p-2"id="pie-chart"  width="600"  height="170"></canvas>
                         </div>
                     </div>
                 </div>
                 <!-- Second subpanel -->
-                <div class="row h-50 p-1">
+                <div class="row h-33 p-1">
                     <div class="col-12">
-                        <div id= "title" class='bg-light rounded shadow h-100 esri-widget'>
+                        <div id= "title" class="bg-light rounded shadow h-95 p-2" style="max-height: 240px;">
                             <!--<canvas height="300px"></canvas> -->
-                            Para el año 2017 <span id='num-inscritos'>0</span> personas  se inscribieron a un programa académico en la <span id='universidad'>x</span>,
-                             de los cuales solo  <span id='num-admitidos'>0</span> fueron admitidos,es decir, un <span id='porcentaje_admitidos'>0</span>% del total de aspirantes.
-                             Por otra parte, para ese mismo año la universidad llegó a <span id='num-matriculados'>0</span> estudiantes matriculados.
 
+                          <p height="170">  Para el año 2017 <span id='num-inscritos'>0</span> personas  se inscribieron a un programa académico en la <span id='universidad'>X</span>,
+                             de los cuales solo  <span id='num-admitidos'>0</span> fueron admitidos,es decir, un <span id='porcentaje_admitidos'>0 </span>% del total de aspirantes.
+                              Para ese mismo año la universidad llegó a un total de  <span id='num-matriculados'>0</span> estudiantes matriculados.<br>
+                              Por otro lado, de <span id="docentes">0</span> docentes adscritos a esta misma universidad, sólo el <span id="porcenDocentes">0 </span>%
+                               (<span id='docentesTC'>0</span> docentes) son de tiempo completo,  <span id='docentesMT'>0</span>% de medio tiempo  y <span id='docentesC'>0</span>% de hora Cátedra
+</p>
                         </div>
                     </div>
                 </div>
 
                 <!-- Third subpanel -->
-              <!--  <div class="row h-33 p-1">
+               <div class="row h-33 p-1">
                     <div class="col-12">
-                        <div  class="bg-light rounded shadow h-100 esri-widget">
-
+                        <div  class="bg-light rounded shadow h-95">
+                          <canvas class="p-2" id="pie-chart-profes"  width="600" height="170"></canvas>
                         </div>
                     </div>
-                </div>-->
+                </div>
 
 
             </div>

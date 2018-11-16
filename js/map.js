@@ -19,7 +19,8 @@ require([
   watchUtils
   ){
 
-  let doughnutChart, totalInscritos, universidad, totalAdmitidos, porcentajeAdmitidos, totalMatriculados;
+  let doughnutChart, pieChartProfes, totalInscritos, universidad, totalAdmitidos, porcentajeAdmitidos, totalMatriculados,
+      docentesCatedra, docentesTCompleto, docentesTMedio, porcentajeDTC, docentes;
   /************************************************************
    * Creates a new WebMap instance. A WebMap must reference
    * a PortalItem ID that represents a WebMap saved to
@@ -91,11 +92,10 @@ require([
       sampleInstructions.style.backgroundColor = "white";
       sampleInstructions.style.width = "300px";
       sampleInstructions.innerHTML = [
-        "Este Mapa  muestra cifras del estudiantado en la <b>Universidad Pública Colombiana</b>,",
+        "Este Mapa  muestra cifras de las <b>Universidades Públicas Colombianas</b>,",
          "tomando datos de Ministerio de educación, más específicamente del <a href='https://www.mineducacion.gov.co/sistemasdeinformacion/1735/w3-article-220340.html?_noredirect=1'> SNIES </a> (Sistema Nacional de información de la Educación Superior).",
          "<br>",
-         "Inspeccione el mapa, seleccione los <b>polígonos</b> para conocer datos del departamento.<br>",
-         "Por otro lado, inspeccione cada una de las universidades públicas para tener datos de sus respectivos estudiantes",
+         "Inspeccione el mapa, utilice los bookmarks, o realice zoom para visualizar las instituciones públicas y haga click en cada una de ellas para obtener información de estudiantes y docentes",
          "<br> <br>",
          "Elaborado por: Semillero de Esri Colombia",
          "<img  src='img/geogeeks.png' alt='logo geogeeks' class='responsive'/>"
@@ -153,7 +153,7 @@ require([
 
     view.on("click", function(event) {
       createCharts();
-      //event.stopPropagation();
+      event.stopPropagation();
       if (promise) {
           promise.cancel();
       }
@@ -172,15 +172,8 @@ require([
                   var screenPoint = hit.screenPoint;
                   console.log(graphic.getAttribute("Name"));
                   updateCharts(graphic);
-                  // tooltipHTML = `
-                  //     <p class="text-emph">${graphic.getAttribute("Inscritos")}</p>
-                  //     <p>
-                  //         Cobertura: <span class="text-emph">${graphic.getAttribute("Matriculados")}%</span>
-                  //         <br>
-                  //         Población: <span class="text-emph">${graphic.getAttribute("Name")}</span>
-                  //     </p>
-                  // `;
-                  // highlight = layerview.highlight(graphic);
+
+                   highlight = layerview.highlight(graphic);
                   // tooltip.show(screenPoint, tooltipHTML);
 
               } else {
@@ -227,17 +220,51 @@ require([
       porcentajeAdmitidos = document.getElementById("porcentaje_admitidos");
       totalMatriculados = document.getElementById("num-matriculados");
       porcentajeAdmitidos = document.getElementById("porcentaje_admitidos");
+      docentesTCompleto = document.getElementById("docentesTC");
+      docentesTMedio = document.getElementById("docentesMT");
+      docentesCatedra = document.getElementById("docentesC");
+      docentes = document.getElementById("docentes");
+      porcentajeDTC = document.getElementById("porcenDocentes");
+
+
 
       const canvasChart = document.getElementById("pie-chart");
       doughnutChart = new Chart(canvasChart.getContext("2d"), {
-        type: "doughnut",
+        type: "bar",
         data: {
           labels: ["Inscritos", "Admitidos",
             "Matriculados"
           ],
           datasets: [{
-            label: "Estudiantes (miles)",
+            label: "Estudiantes",
             backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f"],
+            borderColor: "rgb(255, 255, 255)",
+            borderWidth: 1,
+            data: [0, 0, 0]
+          }]
+        },
+        options: {
+          responsive: true,
+          legend: {
+            position: "top"
+          },
+          title: {
+            display: true,
+            text: "Estadísticas de estudiantes de"+universidad+ "año 2017"
+          }
+        }
+      });
+//////////////////////////Gráfica de profesores/////////////////////////////
+    const canvasChartProfes = document.getElementById("pie-chart-profes");
+      pieChartProfes = new Chart(canvasChartProfes.getContext("2d"), {
+        type: "pie",
+        data: {
+          labels: ["Tiempo Completo", "Medio Tiempo",
+            "Cátedra"
+          ],
+          datasets: [{
+            label: "Docentes (miles)",
+            backgroundColor: ["#13a622", "#d1d523","#cd1010"],
             borderColor: "rgb(255, 255, 255)",
             borderWidth: 1,
             data: [0, 0, 0]
@@ -251,10 +278,11 @@ require([
           },
           title: {
             display: true,
-            text: "Estadísticas de estudiantes de"+universidad+ "año 2017"
+            text: "Estadísticas de docentes de "+universidad+ "año 2017"
           }
         }
       });
+
     }
 //  ====================================================================================================================
 /**
@@ -265,34 +293,64 @@ require([
     // const allStats = responses[0].value;
     // console.log("updateCharts",allStats);
     //
-    var insc = responses.getAttribute("Inscritos");
-    var admi = responses.getAttribute("Admitidos");
-    var matri = responses.getAttribute("Matriculados");
-    var uni = responses.getAttribute("Name");
-    var EstudiantesStats = [
+    let insc = responses.getAttribute("Inscritos");
+    let admi = responses.getAttribute("Admitidos");
+    let matri = responses.getAttribute("Matriculados");
+    let uni = responses.getAttribute("Name");
+    let docentesTC = responses.getAttribute("Docentes_TC");
+    let docentesMT = responses.getAttribute("Docentes_MT");
+    let docentesC = responses.getAttribute("Docentes_C");
+    let EstudiantesStats = [
           insc,
           admi,
           matri
     ];
     console.log(EstudiantesStats);
+    let DocentesStats = [
+          docentesTC,
+          docentesMT,
+          docentesC
+    ];
+    console.log("DOCENTES",DocentesStats);
     var porcen = (admi/insc * 100);
     porcen = porcen.toFixed(3);
-    console.log(porcen);
-    if (insc === undefined){
+    let totalDocentes = docentesTC+docentesMT+docentesC;
+    var porcenDoc = (docentesTC/totalDocentes* 100);
+    porcenDoc = porcenDoc.toFixed(3);
+    docentesMT = (docentesMT/totalDocentes*100).toFixed(3);
+    docentesC = (docentesC/totalDocentes*100).toFixed(3);
+    console.log(porcenDoc);
+    if (insc === undefined || docentesTC === undefined){
       totalInscritos.innerHTML = '0';
       totalAdmitidos.innerHTML = '0';
       totalMatriculados.innerHTML = '0';
       universidad.innerHTML ='x';
       porcentajeAdmitidos.innerHTML = '0';
+      docentesTCompleto.innerHTML ='0';
+      docentesTMedio.innerHTML ='0';
+      docentesCatedra.innerHTML ='0';
+      docentes.innerHTML ='0';
+      porcentajeDTC.innerHTML ='0';
+
+
+
     }else{
-      totalInscritos.innerHTML = insc;
-      totalAdmitidos.innerHTML = admi;
-      totalMatriculados.innerHTML = matri;
+      totalInscritos.innerHTML = insc.toLocaleString();
+      totalAdmitidos.innerHTML = admi.toLocaleString();
+      totalMatriculados.innerHTML = matri.toLocaleString();
       universidad.innerHTML =uni;
       porcentajeAdmitidos.innerHTML = porcen;
+      docentesTCompleto.innerHTML =docentesTC.toLocaleString();
+      docentesTMedio.innerHTML =docentesMT;
+      docentesCatedra.innerHTML =docentesC;
+      docentes.innerHTML = totalDocentes.toLocaleString();
+      porcentajeDTC.innerHTML = porcenDoc;
 
     }
+
+
     updateChart(doughnutChart, EstudiantesStats, uni);
+    updateChart(pieChartProfes, DocentesStats, uni);
     // // Update the total numbers in the title UI element
 
 
@@ -304,10 +362,16 @@ require([
      * Updates the given chart with new data
      */
     function updateChart(chart, dataValues, title) {
+      console.log(chart.id);
       console.log("data",dataValues);
       chart.data.datasets[0].data = dataValues;
       console.log("universidad:",title);
+      if(chart.id == 0){
       chart.options.title.text = "Estadísticas de estudiantes de la "+" "+title+" "+"año 2017";
+      }else{
+        chart.options.title.text = "Estadísticas de docentes de la "+" "+title+" "+"año 2017";
+
+      }
       //chart.options.title.text = title;
       //console.log("chart", chart);
       chart.update();
