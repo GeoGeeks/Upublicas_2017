@@ -1,8 +1,10 @@
+
 var dojoConfig = {
   has:{
     "esri-featurelayer-webgl": 1
   }
 };
+
 
 require([
   "esri/views/MapView",
@@ -19,7 +21,7 @@ require([
   watchUtils
   ){
 
-  let barChart, pieChartProfes, totalInscritos, universidad, totalAdmitidos, porcentajeAdmitidos, totalMatriculados,
+  let barChart, pieChartProfes, lineChartGrad, totalInscritos, universidad, totalAdmitidos, porcentajeAdmitidos, totalMatriculados,
       docentesCatedra, docentesTCompleto, docentesTMedio, porcentajeDTC, docentes;
 
 
@@ -157,9 +159,10 @@ require([
     //console.log(tooltip);
 
     view.on("click", function(event) {
-      if(barChart || pieChartProfes){
+      if(barChart || pieChartProfes || lineChartGrad){
         barChart.destroy();
         pieChartProfes.destroy();
+        lineChartGrad.destroy();
         console.log("destruidos");
 
       }
@@ -293,6 +296,30 @@ require([
           }
         }
       });
+      ////////////////////////////////////////////////////////////////////////////
+      const canvasChartGrad = document.getElementById("line-chart");
+      lineChartGrad = new Chart(canvasChartGrad.getContext("2d"), {
+        type: "line",
+        data: {
+          labels: ["2001", "2002","2003","2004","2005","2006","2007","2008","2009","2010","2011","2012",
+                    "2013","2014","2015","2016","2017"
+          ],
+          datasets: [{
+            label: "Estudiantes Graduados(miles)",
+            data: [0, 0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+          }]
+        },
+        options: {
+          responsive: true,
+          legend: {
+            position: "top"
+          },
+          title: {
+            display: true,
+            text: "Estadísticas de Graduados de "+universidad+ "(2001 - 2017)"
+          }
+        }
+      });
 
     }
 //  ====================================================================================================================
@@ -311,6 +338,24 @@ require([
     let docentesTC = responses.getAttribute("Docentes_TC");
     let docentesMT = responses.getAttribute("Docentes_MT");
     let docentesC = responses.getAttribute("Docentes_C");
+    let g_2001 = responses.getAttribute("G_2001");
+    let g_2002 = responses.getAttribute("G_2002");
+    let g_2003 = responses.getAttribute("G_2003");
+    let g_2004 = responses.getAttribute("G_2004");
+    let g_2005 = responses.getAttribute("G_2005");
+    let g_2006 = responses.getAttribute("G_2006");
+    let g_2007 = responses.getAttribute("G_2007");
+    let g_2008 = responses.getAttribute("G_2008");
+    let g_2009 = responses.getAttribute("G_2009");
+    let g_2010 = responses.getAttribute("G_2010");
+    let g_2011 = responses.getAttribute("G_2011");
+    let g_2012 = responses.getAttribute("G_2012");
+    let g_2013 = responses.getAttribute("G_2013");
+    let g_2014 = responses.getAttribute("G_2014");
+    let g_2015 = responses.getAttribute("G_2015");
+    let g_2016 = responses.getAttribute("G_2016");
+    let g_2017 = responses.getAttribute("G_2017");
+
     let EstudiantesStats = [
           insc,
           admi,
@@ -323,6 +368,26 @@ require([
           docentesC
     ];
     console.log("DOCENTES",DocentesStats);
+    let GraduadosStats = [
+      g_2001,
+      g_2002,
+      g_2003,
+      g_2004,
+      g_2005,
+      g_2006,
+      g_2007,
+      g_2008,
+      g_2009,
+      g_2010,
+      g_2011,
+      g_2012,
+      g_2013,
+      g_2014,
+      g_2015,
+      g_2016,
+      g_2017
+    ];
+    console.log("GRADUDADOS",GraduadosStats);
     var porcen = (admi/insc * 100);
     porcen = porcen.toFixed(3);
     let totalDocentes = docentesTC+docentesMT+docentesC;
@@ -362,6 +427,7 @@ require([
 
     updateChart(barChart, EstudiantesStats, uni);
     updateChart(pieChartProfes, DocentesStats, uni);
+    updateChart(lineChartGrad, GraduadosStats, uni);
     // // Update the total numbers in the title UI element
 
 
@@ -380,7 +446,10 @@ require([
       if(chart.id == 0){
       chart.options.title.text = "Estadísticas de estudiantes de la "+" "+title+" "+"año 2017";
       }else{
-        chart.options.title.text = "Estadísticas de docentes de la "+" "+title+" "+"año 2017";
+
+            chart.options.title.text = "Estadísticas de docentes de la "+" "+title+" "+"año 2017";
+
+
 
       }
       //chart.options.title.text = title;
@@ -390,23 +459,7 @@ require([
 
 //  ====================================================================================================================
 
-var slideIndex = 1;
-showDivs(slideIndex);
 
-function plusDivs(n) {
-  showDivs(slideIndex += n);
-}
-
-function showDivs(n) {
-  var i;
-  var x = document.getElementsByClassName("mySlides");
-  if (n > x.length) {slideIndex = 1;}
-  if (n < 1) {slideIndex = x.length;}
-  for (i = 0; i < x.length; i++) {
-    x[i].style.display = "none";
-  }
-  x[slideIndex-1].style.display = "block";
-}
 
 //  ====================================================================================================================
 });

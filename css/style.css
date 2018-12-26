@@ -11,6 +11,12 @@ html, body{
     height: auto;
 }
 
+@font-face
+{
+font-family: myFirstFont;
+src: url('C:/Windows/Fonts/IMPOS+30.ttf'),
+}
+
 body {
   background: url("../img/aplashh-03.png");
   background-size: cover;
