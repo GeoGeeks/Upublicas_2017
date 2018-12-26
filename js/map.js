@@ -19,8 +19,12 @@ require([
   watchUtils
   ){
 
-  let doughnutChart, pieChartProfes, totalInscritos, universidad, totalAdmitidos, porcentajeAdmitidos, totalMatriculados,
+  let barChart, pieChartProfes, totalInscritos, universidad, totalAdmitidos, porcentajeAdmitidos, totalMatriculados,
       docentesCatedra, docentesTCompleto, docentesTMedio, porcentajeDTC, docentes;
+
+
+
+
   /************************************************************
    * Creates a new WebMap instance. A WebMap must reference
    * a PortalItem ID that represents a WebMap saved to
@@ -143,6 +147,7 @@ require([
     });
 // ====================================================================================================================
 
+
   function setupHoverTooltip(layerview) {
     var promise;
     var highlight;
@@ -152,6 +157,12 @@ require([
     //console.log(tooltip);
 
     view.on("click", function(event) {
+      if(barChart || pieChartProfes){
+        barChart.destroy();
+        pieChartProfes.destroy();
+        console.log("destruidos");
+
+      }
       createCharts();
       event.stopPropagation();
       if (promise) {
@@ -229,7 +240,7 @@ require([
 
 
       const canvasChart = document.getElementById("pie-chart");
-      doughnutChart = new Chart(canvasChart.getContext("2d"), {
+      barChart = new Chart(canvasChart.getContext("2d"), {
         type: "bar",
         data: {
           labels: ["Inscritos", "Admitidos",
@@ -349,7 +360,7 @@ require([
     }
 
 
-    updateChart(doughnutChart, EstudiantesStats, uni);
+    updateChart(barChart, EstudiantesStats, uni);
     updateChart(pieChartProfes, DocentesStats, uni);
     // // Update the total numbers in the title UI element
 
@@ -379,7 +390,23 @@ require([
 
 //  ====================================================================================================================
 
+var slideIndex = 1;
+showDivs(slideIndex);
 
+function plusDivs(n) {
+  showDivs(slideIndex += n);
+}
+
+function showDivs(n) {
+  var i;
+  var x = document.getElementsByClassName("mySlides");
+  if (n > x.length) {slideIndex = 1;}
+  if (n < 1) {slideIndex = x.length;}
+  for (i = 0; i < x.length; i++) {
+    x[i].style.display = "none";
+  }
+  x[slideIndex-1].style.display = "block";
+}
 
 //  ====================================================================================================================
 });
